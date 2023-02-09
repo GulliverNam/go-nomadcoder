@@ -1,0 +1,102 @@
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func multiply(a, b int) int {
+	return a * b
+}
+
+/*
+func lenAndUpper(name string) (int, string) {
+	return len(name), strings.ToUpper(name)
+}
+*/
+
+func lenAndUpper(name string) (length int, uppercase string) {
+	defer fmt.Println("I'm done")
+	length = len(name)
+	uppercase = strings.ToUpper(name)
+	return
+}
+
+func repeatMe(words ...string) {
+	fmt.Println(words)
+}
+
+func superAdd(numbers ...int) (result int) {
+	for _, number := range numbers {
+		result += number
+	}
+	return
+}
+
+// func canIDrink(age int) bool {
+// 	if koreanAge := age + 2; koreanAge < 18 {
+// 		return false
+// 	}
+// 	return true
+// }
+
+func canIDrink(age int) bool {
+	switch koreanAge := age + 2; koreanAge < 18 {
+	case true:
+		return false
+	}
+	return true
+}
+
+type person struct {
+	name    string
+	age     int
+	favFood []string
+}
+
+func main() {
+	const name string = "giwon"
+	fmt.Println(name)
+
+	age := 30 // == var age int = 30, only in function
+	fmt.Println(age)
+	fmt.Println(multiply(2, 2))
+
+	repeatMe("giwon", "aa", "bb", "cc")
+
+	fmt.Println(lenAndUpper(name))
+
+	total := superAdd(1, 2, 3, 4, 5, 6)
+	fmt.Println(total)
+
+	fmt.Println(canIDrink(24))
+
+	///////////////////////////////////////////////////
+	// pointer
+	a := 2
+	b := &a
+	*b = 10
+	fmt.Println(a)
+
+	// array
+	names1 := [5]string{"aaa", "bbb", "ccc", "ddd", "eee"}
+	fmt.Println(names1)
+
+	// slice
+	names2 := []string{"aaa", "bbb", "ccc", "ddd", "eee"}
+	names2 = append(names2, "lalala")
+	fmt.Println(names2)
+
+	// map
+	myMap := map[string]string{"names": "giwon", "age": "30"}
+	fmt.Println(myMap)
+	for key, value := range myMap {
+		fmt.Println(key, value)
+	}
+
+	// struct
+	// check struct above main function.
+	// go dosen't have class, object
+	myStruct := person{name: "giwon", age: 30, favFood: []string{"ramen", "pasta"}}
+	fmt.Println(myStruct)
+}
