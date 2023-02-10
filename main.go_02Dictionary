@@ -1,0 +1,45 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/GulliverNam/go-nomadcoder/mydict"
+)
+
+func main() {
+	dictionary := mydict.Dictionary{"first": "First Word"}
+	// definition, err := dictionary.Search("first")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println(definition)
+	// }
+
+	// word := "second"
+	// definition := "Second Word"
+	// err := dictionary.Add(word, definition)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// second, _ := dictionary.Search(word)
+	// fmt.Println(second)
+
+	baseWord := "hello"
+	dictionary.Add(baseWord, "first")
+	err := dictionary.Update(baseWord, "second")
+	if err != nil {
+		fmt.Println(err)
+	}
+	word, _ := dictionary.Search(baseWord)
+	fmt.Println(word)
+	err = dictionary.Delete(baseWord)
+	if err != nil {
+		fmt.Println(err)
+	}
+	word, err = dictionary.Search(baseWord)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(word)
+	}
+}
