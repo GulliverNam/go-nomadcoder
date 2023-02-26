@@ -2,50 +2,32 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 )
 
 func main() {
-	// var results = make(map[string]string)
-	// urls := []string{
-	// 	"https://www.google.com",
-	// 	"https://www.youtube.com",
-	// 	"https://www.airbnb.com",
-	// 	"https://www.reddit.com",
-	// 	"https://www.twitter.com",
-	// 	"https://www.facebook.com",
-	// 	"https://www.instagram.com",
-	// 	"https://www.linkedin.com",
-	// 	"https://www.github.com",
-	// }
-	// for _, url := range urls {
-	// 	result := "OK"
-	// 	err := hitURL(url)
-	// 	if err != nil {
-	// 		result = "FAILED"
-	// 	}
-	// 	results[url] = result
-	// }
-	// for url, result := range results {
-	// 	fmt.Println(url, result)
-	// }
-
+	/* 3-3. go routines */
 	// go routines is alive during the main function working
-	go nameCount("nico")
-	nameCount("giwon")
+	// go nameCount("nico")
+	// go nameCount("giwon") // there is noting for the main function to do
+	// nameCount("giwon") // main function counting nameCount("giwon") fucntion
+
+	/* 3-4. channel */
+	// chennel is the way to communicate with the main function or another go routines from go routines
+	c := make(chan string)
+	people := [5]string{"nico", "giwon", "aaaaa", "bbbbb", "ccccc"}
+	for _, person := range people {
+		go isName(person, c)
+	}
+	for i := 0; i < len(people); i++ {
+		fmt.Print("waiting for ", i)
+		fmt.Println(<-c) // blocking operation - waiting result
+	}
 }
 
-var errRequestFailed = fmt.Errorf("request failed")
-
-func hitURL(url string) error {
-	fmt.Println("Checking:", url)
-	resp, err := http.Get(url)
-	if err != nil || resp.StatusCode >= 400 {
-		fmt.Println(err)
-		return errRequestFailed
-	}
-	return nil
+func isName(person string, c chan string) {
+	time.Sleep(time.Second * 10)
+	c <- person + " is name"
 }
 
 func nameCount(persion string) {
