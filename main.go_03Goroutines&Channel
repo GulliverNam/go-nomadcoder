@@ -21,13 +21,13 @@ func main() {
 	}
 	for i := 0; i < len(people); i++ {
 		fmt.Print("waiting for ", i)
-		fmt.Println(<-c) // blocking operation - waiting result
+		fmt.Println(<-c) // receive message & blocking operation - waiting result
 	}
 }
 
 func isName(person string, c chan string) {
 	time.Sleep(time.Second * 10)
-	c <- person + " is name"
+	c <- person + " is name" // send messages
 }
 
 func nameCount(persion string) {
